@@ -12,61 +12,22 @@
     func de ver se tem repetição nas palavras, pega o array de resposta de muda para true se for repetido e deixa false se for unico
     func de votação recebe um array de strings(respostas) na ordem, o jogador 1 vai ter as respostas de 1-5 e ... e retorna um array de bool
     func de calcular os pontos, eu recebo o array de bool que vem dos sorteios dai eu pego e como ele ta em ordem de index e player eu so dou os pontos para o player respectivo
-    func de jogar partida, sorteia uma letra e uma categoria, recebe 2-8 jogadores, recebe 5 respostas do usuario e envia essas respostas para a func de votação, repete o processo 3 vezes, depois das 3 vezes retorna um array com a ordem de jogadores de acordo com quem acertou mais pontos
     
  
  */
 import Foundation
 
-class GameManager{
-    var players: [Player] = []
-    var respostas: [Response] = []
-    
+public class GameManager{
     /// Função para sortear a letra da rodada, recebe uma string e retorna um character
-    func randomLetter(letras: String) -> Character {
+    public func randomLetter(letras: String) -> Character {
         return letras.randomElement()!
     }
     ///Função para sortear a categoria da rodada
-    func randomCategorys() -> [String] {
-        let categorys: [String] = [
-            "Nome",
-            "Animal",
-            "Cor",
-            "Comida",
-            "Bebida",
-            "Lugar",
-            "Objeto",
-            "Profissão",
-            "Filme",
-            "Série",
-            "Livro",
-            "Personagem Famoso",
-            "Marca",
-            "Esporte",
-            "Time",
-            "Ator/Atriz",
-            "Cantor(a)",
-            "Banda",
-            "Palavra em Inglês",
-            "Doença",
-            "Partes do Corpo",
-            "App ou Site",
-            "Celebridade",
-            "Jogo",
-            "Instrumento Musical",
-            "Estilo Musical",
-            "Doces/Sobremesas",
-            "Verbo",
-            "Adjetivo",
-            "Coisa de Praia",
-            "Coisa de Festa",
-            "Fulano é..."
-        ]
-        
+   public func randomCategorys(categorys: [String]) -> [String] {
         return Array(categorys.shuffled().prefix(5))
     }
     ///Função para ver se a resposta é repetida
-    func isRepeated(respostas: inout [Response]) {
+   public func isRepeated(respostas: inout [Response]) {
         
         var count: [String: [Response]] = [:]
         
@@ -83,7 +44,7 @@ class GameManager{
     }
     
     ///Função para organizar para votação, recebe as respostas e organiza por categoria, na UI o ideal é alterar o atributo isCorrect na resposta
-    func prepareToVote(toBeVoted: inout [Response?]) -> [[Response?]] {
+  public  func prepareToVote(toBeVoted: inout [Response?]) -> [[Response?]] {
         let sizeGroup = toBeVoted.count / 5
         var groups: [[Response?]] = []
         
@@ -98,7 +59,7 @@ class GameManager{
     }
     
     ///Função para calcular os pontos do jogador, recebe as respostas totais da rodada e o jogadores e soma os devidos pontos de cada um.
-    func calculatePoints(respostas: [Response], players: inout [Player]) {
+  public  func calculatePoints(respostas: [Response], players: inout [Player]) {
         for (index, resposta) in respostas.enumerated() {
             if resposta.isCorrect && resposta.isBest && !resposta.isRepeat {
                 players[index].points = 125
@@ -118,7 +79,7 @@ class GameManager{
 
     
     ///Função para retornar o ranking de jogadores com mais pontos, recebe os players em qualquer ordem e ordena por pontos
-    func ranking(players: [Player]) -> [Player] {
+   public func ranking(players: [Player]) -> [Player] {
         return players.sorted { $0.points > $1.points }
     }
     

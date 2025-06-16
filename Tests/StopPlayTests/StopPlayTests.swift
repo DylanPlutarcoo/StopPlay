@@ -23,7 +23,7 @@ final class GameManagerTests: XCTestCase {
     }
     
     func testRandomCategory() {
-        let finalCategorys = gameManager.randomCategorys()
+        let finalCategorys = gameManager.randomCategorys(categorys: ["Cidade","Cor","Comida","Roupa","Pais","Fulano é...","Paisagem"])
         XCTAssertEqual(finalCategorys.count, 5)
         for categoria in finalCategorys {
             XCTAssertTrue(finalCategorys.contains(categoria), "Categoria inválida encontrada: \(categoria)")
