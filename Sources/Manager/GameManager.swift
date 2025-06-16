@@ -18,13 +18,14 @@
 import Foundation
 
 public class GameManager{
+    public init() {}
     /// Função para sortear a letra da rodada, recebe uma string e retorna um character
     public func randomLetter(letras: String) -> Character {
         return letras.randomElement()!
     }
     ///Função para sortear a categoria da rodada
-   public func randomCategorys(categorys: [String]) -> [String] {
-        return Array(categorys.shuffled().prefix(5))
+   public func randomCategories(categories: [String]) -> [String] {
+        return Array(categories.shuffled().prefix(5))
     }
     ///Função para ver se a resposta é repetida
    public func isRepeated(respostas: inout [Response]) {
