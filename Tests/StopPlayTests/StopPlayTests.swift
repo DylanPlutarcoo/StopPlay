@@ -18,7 +18,7 @@ final class GameManagerTests: XCTestCase {
     
     func testRandomLetter() {
         let letrasValidas = Set("ABCDEFGHIJKLMNOPQRSTUVXWYZ")
-        let letra = gameManager.randomLetter()
+        let letra = gameManager.randomLetter(letras: "ABCDEFGHIJKLMNOPQRSTUVXWYZ")
         XCTAssertTrue(letrasValidas.contains(letra))
     }
     
@@ -31,12 +31,13 @@ final class GameManagerTests: XCTestCase {
     }
     
     func testRepeatedAnswers1() {
-        let a1 = Response(answer: "A")
-        let a2 = Response(answer: "A")
-        let a3 = Response(answer: "B")
-        let a4 = Response(answer: "B")
-        let a5 = Response(answer: "C")
-        let _ = gameManager.isRepeated(respostas: [a1, a2, a3, a4, a5])
+        var a1 = Response(text: "A")
+        var a2 = Response(text: "A")
+        var a3 = Response(text: "B")
+        var a4 = Response(text: "B")
+        var a5 = Response(text: "C")
+        var respostas = [a1, a2, a3, a4, a5]
+        var _ = gameManager.isRepeated(respostas: &respostas )
         XCTAssertTrue(a1.isRepeat)
         XCTAssertTrue(a2.isRepeat)
         XCTAssertTrue(a3.isRepeat)
@@ -45,20 +46,20 @@ final class GameManagerTests: XCTestCase {
 
     }
     func testPrepareToVote() {
-        let responses: [Response?] = [
-            Response(answer: "A"),
-            Response(answer: "B"),
-            Response(answer: "C"),
-            Response(answer: "D"),
-            Response(answer: "E"),
-            Response(answer: "F"),
-            Response(answer: "G"),
-            Response(answer: "H"),
-            Response(answer: "I"),
-            Response(answer: "J")
+        var responses: [Response?] = [
+            Response(text: "A"),
+            Response(text: "B"),
+            Response(text: "C"),
+            Response(text: "D"),
+            Response(text: "E"),
+            Response(text: "F"),
+            Response(text: "G"),
+            Response(text: "H"),
+            Response(text: "I"),
+            Response(text: "J")
         ]
         
-        let groups = gameManager.prepareToVote(toBeVoted: responses)
+        let groups = gameManager.prepareToVote(toBeVoted: &responses)
         
         XCTAssertEqual(groups.count, 5)
         for group in groups {
@@ -71,30 +72,26 @@ final class GameManagerTests: XCTestCase {
         XCTAssertEqual(groups[4], [responses[8], responses[9]])
     }
     func testCalculatePoints() {
-        let r1 = Response(answer: "Banana", isRepeat: true)
-        let r2 = Response(answer: "Abacaxi", isRepeat: false)
-        let r3 = Response(answer: "Cenoura", isRepeat: false)
-
-        let respostas = [r1, r2, r3]
-
-        let p1 = Player(name: "Alice")
-        let p2 = Player(name: "Bob")
-        let p3 = Player(name: "Carol")
-
-        let players = [p1, p2, p3]
-
-        let votos: [[Bool]] = [
-            [true, true, false],
-            [true, true, false],
-            [false, false, true]
-        ]
-
-        gameManager.calculatePoints(votos: votos, respostas: respostas, player: players)
-
-        XCTAssertEqual(players[0].points, 10, "Jogador 0 deveria ter 10 pontos (resposta repetida e válida)")
-        XCTAssertEqual(players[1].points, 5, "Jogador 1 deveria ter 5 pontos (resposta única e válida)")
-        XCTAssertEqual(players[2].points, 0, "Jogador 2 não deveria ter pontos (resposta não válida)")
-    }
+            let respostas = [
+                Response(text: "",isRepeat: false,isCorrect: true, isBest: true),  // 125
+                Response(text: "",isRepeat: true,isCorrect: true, isBest: true),   // 75
+                Response(text: "",isRepeat: true,isCorrect: true, isBest: false),  // 50
+                Response(text: "",isRepeat: true,isCorrect: false, isBest: true),  // 0
+                Response(text: "", isRepeat: false,isCorrect: false, isBest: false) // 0
+            ]
+            
+        var players = (0..<5).map { _ in
+            Player(name: "oi")
+        }
+            
+            gameManager.calculatePoints(respostas: respostas, players: &players)
+            
+            XCTAssertEqual(players[0].points, 125)
+            XCTAssertEqual(players[1].points, 75)
+            XCTAssertEqual(players[2].points, 50)
+            XCTAssertEqual(players[3].points, 0)
+            XCTAssertEqual(players[4].points, 0)
+        }
     func testRanking() {
         let p1 = Player(name: "Alice")
         p1.points = 15
