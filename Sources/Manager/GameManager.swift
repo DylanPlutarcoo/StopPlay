@@ -38,7 +38,7 @@ public class GameManager{
         for (_, answers) in count {
             if answers.count > 1 {
                 for answer in answers {
-                    answer.isRepeat = true
+                    answer.isRepeated = true
                 }
             }
         }
@@ -60,20 +60,21 @@ public class GameManager{
     }
     
     ///Função para calcular os pontos do jogador, recebe as respostas totais da rodada e o jogadores e soma os devidos pontos de cada um.
-  public  func calculatePoints(respostas: [Response], players: inout [Player]) {
-        for (index, resposta) in respostas.enumerated() {
-            if resposta.isCorrect && resposta.isBest && !resposta.isRepeat {
-                players[index].points = 125
-            } else if resposta.isCorrect && resposta.isBest && resposta.isRepeat {
-                players[index].points = 75
-            } else if resposta.isCorrect && resposta.isRepeat {
-                players[index].points = 50
-            } else {
-                players[index].points = 0
-            }
-        }
-        
-    }
+// TODO: refactor calculatePoints mudou
+//  public  func calculatePoints(respostas: [Response], players: inout [Player]) {
+//        for (index, resposta) in respostas.enumerated() {
+//            if resposta.isValid && resposta.isBest && !resposta.isRepeat {
+//                players[index].points = 125
+//            } else if resposta.isValid && resposta.isBest && resposta.isRepeat {
+//                players[index].points = 75
+//            } else if resposta.isValid && resposta.isRepeated {
+//                players[index].points = 50
+//            } else {
+//                players[index].points = 0
+//            }
+//        }
+//        
+//    }
 
 
 

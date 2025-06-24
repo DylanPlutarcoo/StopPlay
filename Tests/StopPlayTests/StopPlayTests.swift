@@ -38,11 +38,11 @@ final class GameManagerTests: XCTestCase {
         var a5 = Response(text: "C")
         var respostas = [a1, a2, a3, a4, a5]
         var _ = gameManager.isRepeated(respostas: &respostas )
-        XCTAssertTrue(a1.isRepeat)
-        XCTAssertTrue(a2.isRepeat)
-        XCTAssertTrue(a3.isRepeat)
-        XCTAssertTrue(a4.isRepeat)
-        XCTAssertFalse(a5.isRepeat)
+        XCTAssertTrue(a1.isRepeated)
+        XCTAssertTrue(a2.isRepeated)
+        XCTAssertTrue(a3.isRepeated)
+        XCTAssertTrue(a4.isRepeated)
+        XCTAssertFalse(a5.isRepeated)
 
     }
     func testPrepareToVote() {
