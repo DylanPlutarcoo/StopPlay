@@ -1,7 +1,7 @@
 import Foundation
  // diferenciar nome do atributo do nome da classe
 
-public final class Response: Equatable{
+public final class Response: Equatable, Codable {
     public let text: String
     public var isRepeat: Bool
     public var isCorrect: Bool

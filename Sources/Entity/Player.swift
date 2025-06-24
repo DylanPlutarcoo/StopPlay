@@ -1,7 +1,7 @@
 import Foundation
  
 
-public final class Player {
+public final class Player: Codable {
   public  let name: String
   public  var points: Int
     
