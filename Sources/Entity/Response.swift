@@ -16,16 +16,11 @@ public final class Response: Equatable, Codable {
         self.votes = votes
         self.isRepeated = isRepeat
     }
+    
    public static func == (lhs: Response, rhs: Response) -> Bool {
            return lhs.text == rhs.text && lhs.isRepeated == rhs.isRepeated
-       }
-    
-    
-    public func validateAnswer(with letter: String) {
-        if isAnswerValid(letter: letter) {
-            self.isCorrect = false
-        }
     }
+    
     
     public func isAnswerValid(letter: String) -> Bool {
         if doesAnswerStartWithLetter(letter) {
