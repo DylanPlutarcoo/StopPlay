@@ -1,7 +1,8 @@
 import Foundation
  // diferenciar nome do atributo do nome da classe
 
-public final class Response: Equatable, Codable {
+public final class Response: Equatable, Codable, Identifiable {
+    public var id = UUID()
     public let text: String
     public var votes: [Bool]
     public var isRepeated: Bool
